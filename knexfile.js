@@ -1,30 +1,35 @@
+require('dotenv').config();
+
+const pg = require('pg');
+pg.defaults.ssl = true;
+
+const dbConnection = process.env.DATABASE_URL || {
+  filename: './database/users.db3'
+};
+
 module.exports = {
   development: {
-    client: 'sqlite3',
-    connection: {
-      filename: './database/users.db3'
+    client: 'pg',
+    connection: dbConnection,
+    migrations: {
+      directory: './database/migrations',
+      tablename: 'knex_migrations'
+    },
+    seeds: {
+      directory: './database/seeds'
     },
     pool: {
       min: 2,
       max: 10
     },
-    migrations: {
-      directory: './database/migrations'
-    },
-    seeds: {
-      directory: './database/seeds'
-    },
     useNullAsDefault: true
   },
+
   testing: {
     client: 'sqlite3',
     connection: {
       filename: './database/test.db3'
     },
-    pool: {
-      min: 2,
-      max: 10
-    },
     useNullAsDefault: true,
     migrations: {
       directory: './database/migrations'
@@ -34,10 +39,10 @@ module.exports = {
     },
     useNullAsDefault: true
   },
+
   production: {
-    client: 'sqlite3',
-    useNullAsDefault: true,
-    connection: process.env.DATABASE_URL,
+    client: 'pg',
+    connection: dbConnection,
     pool: {
       min: 2,
       max: 10
@@ -48,6 +53,62 @@ module.exports = {
     },
     seeds: {
       directory: './database/seeds'
-    }
+    },
+    useNullAsDefault: true
   }
 };
+
+//Sqlite configs
+// module.exports = {
+//   development: {
+//     client: 'sqlite3',
+//     connection: {
+//       filename: './database/users.db3'
+//     },
+//     pool: {
+//       min: 2,
+//       max: 10
+//     },
+//     migrations: {
+//       directory: './database/migrations'
+//     },
+//     seeds: {
+//       directory: './database/seeds'
+//     },
+//     useNullAsDefault: true
+//   },
+//   testing: {
+//     client: 'sqlite3',
+//     connection: {
+//       filename: './database/test.db3'
+//     },
+//     pool: {
+//       min: 2,
+//       max: 10
+//     },
+//     useNullAsDefault: true,
+//     migrations: {
+//       directory: './database/migrations'
+//     },
+//     seeds: {
+//       directory: './database/seeds'
+//     },
+//     useNullAsDefault: true
+//   },
+//   production: {
+//     client: 'sqlite3',
+//     useNullAsDefault: true,
+//     connection: process.env.DATABASE_URL,
+//     pool: {
+//       min: 2,
+//       max: 10
+//     },
+//     migrations: {
+//       directory: './database/migrations',
+//       tableName: 'knex_migrations'
+//     },
+//     seeds: {
+//       directory: './database/seeds'
+//     }
+//   }
+// };
