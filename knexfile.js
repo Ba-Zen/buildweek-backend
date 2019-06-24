@@ -7,18 +7,15 @@ const dbConnection = process.env.DATABASE_URL;
 
 module.exports = {
   development: {
-    client: 'pg',
-    connection: dbConnection,
+    client: 'sqlite3',
+    connection: {
+      filename: './database/users.db3'
+    },
     migrations: {
-      directory: './database/migrations',
-      tablename: 'knex_migrations'
+      directory: './database/migrations'
     },
     seeds: {
       directory: './database/seeds'
-    },
-    pool: {
-      min: 2,
-      max: 10
     },
     useNullAsDefault: true
   },
