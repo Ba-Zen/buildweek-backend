@@ -4,7 +4,7 @@ const pg = require('pg');
 pg.defaults.ssl = true;
 
 const dbConnection = process.env.DATABASE_URL;
-
+//
 module.exports = {
   development: {
     client: 'sqlite3',
