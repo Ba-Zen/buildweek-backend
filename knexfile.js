@@ -3,9 +3,7 @@ require('dotenv').config();
 const pg = require('pg');
 pg.defaults.ssl = true;
 
-const dbConnection = process.env.DATABASE_URL || {
-  filename: './database/users.db3'
-};
+const dbConnection = process.env.DATABASE_URL;
 
 module.exports = {
   development: {
@@ -43,10 +41,6 @@ module.exports = {
   production: {
     client: 'pg',
     connection: dbConnection,
-    pool: {
-      min: 2,
-      max: 10
-    },
     migrations: {
       directory: './database/migrations',
       tableName: 'knex_migrations'
